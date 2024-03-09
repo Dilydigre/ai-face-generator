@@ -37,7 +37,7 @@ services: # declare running dockers
     image: ghcr.io/dilydigre/ai:main # get latest image from github registry
     container_name: ai_model
     restart: always
-    pull_policy: always  always pull image to ensure to get latest version
+    pull_policy: always  # always pull image to ensure to get latest version
     expose:
       - 5000
     networks:
