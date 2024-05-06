@@ -15,10 +15,18 @@ services: # declare running dockers
     restart: always 
     ports:
       - 80:80 # for http support
+      - 443:443
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf # location of nginx conf file
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro # location of nginx conf file
+      - ./certbot/www:/var/www/certbot/:ro          # location of certificates for https
     network_mode: host 
 
+  # Cerbot to manage letsencrypt certificates
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+  
   # flask website
   website:
     image: ghcr.io/dilydigre/website:main # get latest image from github registry
