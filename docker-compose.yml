@@ -1,8 +1,9 @@
 version: "3"
 networks:
   ai_docker_network:
-    driver: gateway
+    #driver: bridge
     ipam:
+      #driver: bridge
       config:
         - subnet: 10.10.0.0/16
           gateway: 10.10.0.1
@@ -26,7 +27,7 @@ services: # declare running dockers
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
-  
+
   # flask website
   website:
     image: ghcr.io/dilydigre/website:main # get latest image from github registry
