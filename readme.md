@@ -1,8 +1,8 @@
 # Description
-This is the main repository of the project.
+Dev version of docker compose to develop the website in local.
 # Installation
 - Clone the repository
-- Go inside 
-- Make sure you have already generate Let's Encrypt certificates and store them in ../certbot-certs/conf/
-- Install and start using docker compose : `sudo docker compose up`
-- Website is available at [http://localhost](http://localhost)
+- Go inside
+- Install and start using docker compose : `sudo docker compose up --build -d`
+- Website is available at [http://10.10.0.4:5000/](http://10.10.0.4:5000/)
+- To restart server after build : `sudo docker compose down && sudo docker compose up --build`
