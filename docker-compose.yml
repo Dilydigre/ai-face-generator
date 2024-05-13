@@ -18,8 +18,9 @@ services: # declare running dockers
       - 80:80 # for http support
       - 443:443
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro # location of nginx conf file
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/app.conf:ro # location of nginx conf file
       - ./certbot/www:/var/www/certbot/:ro          # location of certificates for https
+      - ../certbot-certs/conf/:/etc/nginx/ssl/:ro          # location of certificates for https
     network_mode: host 
 
   # Cerbot to manage letsencrypt certificates
@@ -27,6 +28,7 @@ services: # declare running dockers
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
   # flask website
   website:
@@ -41,6 +43,7 @@ services: # declare running dockers
     networks:
       ai_docker_network:  # network for backend
           ipv4_address: ${WEBSITE_CONTAINER_IP} # force container IP, can be setup in .env file
+
   # AI model / API container
   ai_model:
     image: ghcr.io/dilydigre/ai:main # get latest image from github registry
@@ -52,4 +55,3 @@ services: # declare running dockers
     networks:
       ai_docker_network: # network for backend
         ipv4_address: ${AI_CONTAINER_IP} # force container IP, can be setup in .env file
-
